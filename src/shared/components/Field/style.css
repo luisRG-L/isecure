@@ -1,0 +1,17 @@
+.formgroup {
+	display: flex;
+	flex-direction: column;
+}
+
+.error {
+	color: red;
+	font-size: 0.875rem;
+}
+
+select {
+	background-color: #f0f0f0;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	padding: 8px;
+	font-size: 1rem;
+}

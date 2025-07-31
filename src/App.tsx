@@ -1,14 +1,13 @@
-import BaseRouter from './shared/routers/BaseRouter'
+import BaseRouter from "./shared/routers/BaseRouter";
 
-import './shared/styles/global.css'
+import "./shared/styles/global.css";
 
 function App() {
-
-  return (
-    <>
-      <BaseRouter />
-    </>
-  )
+	return (
+		<>
+			<BaseRouter />
+		</>
+	);
 }
 
-export default App
+export default App;

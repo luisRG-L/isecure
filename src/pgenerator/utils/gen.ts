@@ -1,5 +1,10 @@
 import validatePassword from "../../shared/utils/validate";
 import getRandomEnumValue from "../../shared/utils/randenum";
+import {
+	RAW_LETTERS,
+	RAW_NUMBERS,
+	RAW_SPECIAL_CHARS,
+} from "../../shared/consts/consts";
 
 enum SpecialWordLocation {
     Start  = "START",
@@ -11,15 +16,13 @@ export default async function genPassword (
     symbolCount: number,
     lettersCount: number,
     numbersCount: number,
-    specialWord: string
+	specialWord: string,
+	threshold: number = 60
 ): Promise<string> {
-    const raw_symbols = '!@#$%^&*()_+-=[]{}\\|;:\'",./<>?';
-    const raw_letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const raw_numbers = '0123456789';
 
-    const symbols = raw_symbols.split('');
-    const letters = raw_letters.split('');
-    const numbers = raw_numbers.split('');
+    const symbols = RAW_SPECIAL_CHARS.split('');
+    const letters = RAW_LETTERS.split('');
+    const numbers = RAW_NUMBERS.split('');
 
     let password = '';
 
@@ -45,7 +48,6 @@ export default async function genPassword (
             password = specialWord + password;
             break;
         case SpecialWordLocation.Middle:
-            // split the password in two parts
             const firstPart = password.slice(0, password.length / 2);
             const secondPart = password.slice(password.length / 2);
             password = firstPart + specialWord + secondPart;
@@ -55,7 +57,7 @@ export default async function genPassword (
             break;
     }
 
-    const [_weak, checked] = validatePassword(password);
+    const [_weak, checked] = validatePassword(password, threshold);
 
     if (!checked) {
         return genPassword(symbolCount, lettersCount, numbersCount, specialWord);
